@@ -19,6 +19,51 @@ Le projet est organisé autour de plusieurs couches :
 - **IHM Windows** : éditeur de réseau et outils d'analyse de données ;
 - **persistance** : projets et réseaux entraînés sérialisés en JSON.
 
+
+---
+
+## Démonstration visuelle
+
+Le projet dispose de deux grandes interfaces : l'analyse de données et l'éditeur de réseaux neuronaux.
+
+### Analyse 3D des données
+
+<p align="center">
+  <img src="images/01_analyse_3d.png" alt="Visualisation 3D des données" width="900">
+</p>
+
+La vue 3D permet d'inspecter les observations après sélection des variables et d'observer les groupes dans l'espace des caractéristiques.
+
+### Architecture du réseau entraîné
+
+<p align="center">
+  <img src="images/network_architecture.png" alt="Architecture du réseau neuronal entraîné" width="1000">
+</p>
+
+Cette représentation est générée directement à partir du fichier [`examples/trained_project.json`](examples/trained_project.json), plutôt que d'utiliser une capture d'écran de l'éditeur.
+
+Le réseau sauvegardé correspond à la chaîne :
+
+```text
+Input (4 caractéristiques)
+   ↓
+ReLU (8 neurones)
+   ↓
+SoftMax (3 classes)
+   ↓
+Output
+```
+
+Les poids sauvegardés ont notamment les dimensions `W_2 : 8 × 4` et `W_4 : 3 × 8`.
+
+### Configuration d'un entraînement
+
+<p align="center">
+  <img src="images/03_configuration_entrainement.png" alt="Configuration de l'entraînement" width="700">
+</p>
+
+Les paramètres de l'entraînement comprennent notamment la taille du batch, le nombre d'époques, le mode de séparation des données et un éventuel fichier de test séparé.
+
 ---
 
 ## 2. Architecture
@@ -110,6 +155,29 @@ projet/
 ```
 
 ---
+
+## Exemple concret : modèle entraîné
+
+Le fichier `examples/trained_project.json` décrit le réseau utilisé pour la démonstration Iris. Les quatre colonnes d'entrée sont les quatre mesures classiques du jeu de données, et les trois sorties correspondent aux classes `Iris-setosa`, `Iris-versicolor` et `Iris-virginica`.
+
+La structure du graphe sérialisé est :
+
+```text
+Input → ReLu → SoftMax → Output
+```
+
+Les dimensions des principaux poids sauvegardés sont :
+
+```math
+W_2\in\mathbb{R}^{8\times4}
+```
+
+et :
+
+```math
+W_4\in\mathbb{R}^{3\times8}
+```
+
 
 ## 4. Représentation d'un réseau
 
@@ -611,6 +679,19 @@ pour la stabilité numérique.
 
 ---
 
+
+### Résultats d'entraînement
+
+Un entraînement sur le jeu de données présenté dans l'interface produit un résumé des métriques et une courbe de loss par époque.
+
+<p align="center">
+  <img src="images/04_resume_entrainement.png" alt="Résumé de l'entraînement et métriques" width="750">
+</p>
+
+<p align="center">
+  <img src="images/05_courbe_loss.png" alt="Courbe de loss par époque" width="750">
+</p>
+
 # 10. Couches disponibles
 
 L'éditeur expose :
@@ -939,6 +1020,21 @@ OPTICS
 
 Les données sélectionnées peuvent être affichées dans une vue 3D même lorsque l'espace d'origine est de dimension supérieure.
 
+
+### Captures de l'interface d'analyse
+
+Le tableau des données permet de sélectionner les colonnes numériques utilisées par les algorithmes de clustering.
+
+<p align="center">
+  <img src="images/08_tableau_donnees.png" alt="Tableau de données chargé dans l'interface" width="1100">
+</p>
+
+La boîte de dialogue K-means permet de sélectionner les variables et de définir le nombre de clusters.
+
+<p align="center">
+  <img src="images/09_selection_kmeans.png" alt="Sélection des variables et du nombre de clusters pour K-means" width="700">
+</p>
+
 ## 18.1 K-means
 
 Le critère classique est :
@@ -1128,6 +1224,18 @@ Le réseau peut ensuite être reconstruit depuis cette description pour l'infér
 
 ---
 
+
+### Exemple de projet entraîné
+
+Le fichier JSON conserve la description du graphe ainsi que les paramètres appris.
+
+<p align="center">
+  <img src="images/trained_model_overview.png" alt="Résumé des paramètres du modèle entraîné" width="900">
+</p>
+
+Le fichier complet est fourni dans [`examples/trained_project.json`](examples/trained_project.json). La figure ci-dessus synthétise ses principaux tenseurs appris sans reproduire une capture d'écran de l'éditeur ou du fichier JSON.
+
+
 # 21. Validation
 
 La construction du runtime vérifie notamment :
@@ -1262,6 +1370,26 @@ L'objectif est de contrôler l'ensemble de la chaîne, depuis les opérations ma
 
 ---
 
+## Donnée d'exemple
+
+Le modèle sauvegardé utilisé pour les figures est disponible dans [`examples/trained_project.json`](examples/trained_project.json).
+
 ## Licence
 
 Aucune licence explicite n'est fournie dans l'archive originale.
+
+
+---
+
+## Galerie des captures
+
+| Fichier | Contenu |
+|---|---|
+| `images/01_analyse_3d.png` | Visualisation 3D des données |
+| `images/network_architecture.png` | Architecture du réseau entraîné, générée depuis le JSON |
+| `images/03_configuration_entrainement.png` | Paramètres d'entraînement |
+| `images/04_resume_entrainement.png` | Résumé des métriques |
+| `images/05_courbe_loss.png` | Loss par époque |
+| `images/trained_model_overview.png` | Synthèse des paramètres appris |
+| `images/08_tableau_donnees.png` | Tableau de données |
+| `images/09_selection_kmeans.png` | Paramétrage K-means |
