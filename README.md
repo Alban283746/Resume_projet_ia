@@ -34,27 +34,27 @@ Le projet dispose de deux grandes interfaces : l'analyse de données et l'édite
 
 La vue 3D permet d'inspecter les observations après sélection des variables et d'observer les groupes dans l'espace des caractéristiques.
 
-### Architecture du réseau entraîné
+### Éditeur de réseau neuronal
 
 <p align="center">
-  <img src="images/network_architecture.png" alt="Architecture du réseau neuronal entraîné" width="1000">
+  <img src="images/network_editor.png" alt="Éditeur graphique du réseau neuronal" width="1200">
 </p>
 
-Cette représentation est générée directement à partir du fichier [`examples/trained_project.json`](examples/trained_project.json), plutôt que d'utiliser une capture d'écran de l'éditeur.
+Cette capture montre directement l'interface du projet et son graphe neuronal interactif.
 
-Le réseau sauvegardé correspond à la chaîne :
+Le réseau affiché est organisé selon la chaîne :
 
 ```text
-Input (4 caractéristiques)
+Input
    ↓
-ReLU (8 neurones)
+ReLU
    ↓
-SoftMax (3 classes)
+SoftMax
    ↓
 Output
 ```
 
-Les poids sauvegardés ont notamment les dimensions `W_2 : 8 × 4` et `W_4 : 3 × 8`.
+Le modèle correspondant est également disponible sous forme sérialisée dans [`examples/trained_project.json`](examples/trained_project.json).
 
 ### Configuration d'un entraînement
 
@@ -1233,7 +1233,9 @@ Le fichier JSON conserve la description du graphe ainsi que les paramètres appr
   <img src="images/trained_model_overview.png" alt="Résumé des paramètres du modèle entraîné" width="900">
 </p>
 
-Le fichier complet est fourni dans [`examples/trained_project.json`](examples/trained_project.json). La figure ci-dessus synthétise ses principaux tenseurs appris sans reproduire une capture d'écran de l'éditeur ou du fichier JSON.
+Le fichier complet est fourni dans [`examples/trained_project.json`](examples/trained_project.json).
+
+Une représentation schématique complémentaire est disponible dans `images/network_architecture.png`. La figure ci-dessus synthétise ses principaux tenseurs appris sans reproduire une capture d'écran de l'éditeur ou du fichier JSON.
 
 
 # 21. Validation
@@ -1386,7 +1388,7 @@ Aucune licence explicite n'est fournie dans l'archive originale.
 | Fichier | Contenu |
 |---|---|
 | `images/01_analyse_3d.png` | Visualisation 3D des données |
-| `images/network_architecture.png` | Architecture du réseau entraîné, générée depuis le JSON |
+| `images/network_editor.png` | Éditeur graphique et affichage du réseau neuronal |
 | `images/03_configuration_entrainement.png` | Paramètres d'entraînement |
 | `images/04_resume_entrainement.png` | Résumé des métriques |
 | `images/05_courbe_loss.png` | Loss par époque |
